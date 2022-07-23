@@ -11,8 +11,7 @@
     "jest"
   ],
   "parserOptions": {
-    "ecmaVersion": "latest",
-    "sourceType": "module"
+    "ecmaVersion": "latest"
   },
   "rules": {
     "no-console": "off"
