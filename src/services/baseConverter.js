@@ -1,23 +1,30 @@
 const { resolve, dirname } = require('node:path');
-const { readFile } = require('node:fs/promises');
+const { randomBytes } = require('node:crypto');
+const { readFile, writeFile } = require('node:fs/promises');
 
 class BaseConverter {
-  static fileToBuffer(path) {
+  constructor({ path, savePath }) {
+    this.path = path;
+    this.savePath = savePath;
+
+    this.data = [];
+    this.file = null;
+    this.headers = [];
+    this.extension = null;
+    this.convertedContent = null;
+  }
+
+  async createFile() {
     const mainFilename = dirname(require.main.filename);
-    const normalizedPath = resolve(mainFilename, path);
-    return readFile(normalizedPath);
+    const normalizedPath = resolve(mainFilename, this.savePath);
+    const filename = `${normalizedPath}/${randomBytes(8).toString('hex')}.${this.extension}`;
+    await writeFile(filename, this.convertedContent);
   }
 
-  static convert(data) {
-    throw new Error('not implemented', data);
-  }
-
-  static validate(data) {
-    throw new Error('not implemented', data);
-  }
-
-  static sanitize(data) {
-    throw new Error('not implemented', data);
+  async fileToBuffer() {
+    const mainFilename = dirname(require.main.filename);
+    const normalizedPath = resolve(mainFilename, this.path);
+    this.file = await readFile(normalizedPath);
   }
 }
 
