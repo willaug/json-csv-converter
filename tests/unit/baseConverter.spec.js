@@ -2,11 +2,11 @@ const fs = require('node:fs/promises');
 const BaseConverter = require('../../src/services/baseConverter');
 
 jest.mock('node:fs/promises', () => ({
-  readFile: Buffer,
+  readFile: jest.requireActual('node:fs/promises').readFile,
   writeFile: jest.fn(),
 }));
 
-describe('BaseConverterClass', () => {
+describe('BaseConverter', () => {
   it('Should be able to read a file and return a buffer', async () => {
     const baseConverter = new BaseConverter({ path: '../mocks/correctCsvData.csv' });
     await baseConverter.fileToBuffer();
