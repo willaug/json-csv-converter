@@ -1,4 +1,3 @@
-/* eslint-disable arrow-body-style */
 const BaseConverter = require('../shared/baseConverter');
 
 class ToCsv extends BaseConverter {
@@ -11,7 +10,7 @@ class ToCsv extends BaseConverter {
       .validate()
       .fileToBuffer()
       .then(() => {
-        return this.bufferToArray()
+        return this.bufferToData()
           .createHeaders()
           .convert()
           .createFile();
@@ -65,7 +64,7 @@ class ToCsv extends BaseConverter {
     return this;
   }
 
-  bufferToArray() {
+  bufferToData() {
     this.data = JSON.parse(this.file);
     return this;
   }

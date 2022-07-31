@@ -73,12 +73,12 @@ describe('BaseConverter', () => {
       expect(notImplementedException).toThrow('the "validate" function was not implemented!');
     });
 
-    it('Should be able to call bufferToArray function and throw not implemented error', () => {
+    it('Should be able to call bufferToData function and throw not implemented error', () => {
       const baseConverter = new BaseConverter({});
-      const notImplementedException = () => baseConverter.bufferToArray();
+      const notImplementedException = () => baseConverter.bufferToData();
 
       expect(notImplementedException).toThrow(Error);
-      expect(notImplementedException).toThrow('the "bufferToArray" function was not implemented!');
+      expect(notImplementedException).toThrow('the "bufferToData" function was not implemented!');
     });
   });
 });

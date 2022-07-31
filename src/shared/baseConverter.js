@@ -53,8 +53,8 @@ class BaseConverter {
     throw new NotImplementedException(this.validate.name);
   }
 
-  bufferToArray() {
-    throw new NotImplementedException(this.bufferToArray.name);
+  bufferToData() {
+    throw new NotImplementedException(this.bufferToData.name);
   }
 }
 

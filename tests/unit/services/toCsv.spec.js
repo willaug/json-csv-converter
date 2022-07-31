@@ -20,41 +20,14 @@ describe('ToCsv', () => {
       await toCsv.execute();
 
       expect(writeFileSpy).toBeCalledWith(expect.any(String), toCsv.convertedContent);
-    });
 
-    it('Should be able to convert an array in string', () => {
-      const toCsv = new ToCsv({});
-      toCsv.data = correctJsonData;
-      toCsv.headers = ['id', 'name', 'age'];
-      toCsv.convert();
-
+      expect(toCsv.extension).toBe('csv');
+      expect(toCsv.data).toStrictEqual(correctJsonData);
+      expect(toCsv.headers).toStrictEqual(['id', 'name', 'age']);
       expect(toCsv.convertedContent).toContain('id,name,age');
       expect(toCsv.convertedContent).toContain('c9c9c5c5-fdd1-573a-8aaa-8791795db943,William,19');
       expect(toCsv.convertedContent).toContain('a3eac847-5845-5055-9829-db2d68181919,Will,20');
       expect(toCsv.convertedContent).toContain('4669f692-18a0-59c0-9daa-8d69ff2808f3,,21');
-    });
-
-    it('Should be able to create headers list based in data array', () => {
-      const toCsv = new ToCsv({});
-      toCsv.data = correctJsonData;
-      toCsv.createHeaders();
-
-      expect(toCsv.headers).toHaveLength(3);
-      expect(toCsv.headers).toStrictEqual(['id', 'name', 'age']);
-    });
-
-    it('Should be able to convert json file in javascript array', async () => {
-      const toCsv = new ToCsv({ path: '../../mocks/correctJsonData.json' });
-      await toCsv.fileToBuffer();
-      toCsv.bufferToArray();
-
-      expect(toCsv.data).toStrictEqual(correctJsonData);
-    });
-
-    it('Should be able to validate a valid file and not return an error', async () => {
-      const toCsv = new ToCsv({ path: '../../mocks/correctJsonData.json', savePath: '../../mocks/files' });
-      await toCsv.fileToBuffer();
-      toCsv.validate();
     });
   });
 
