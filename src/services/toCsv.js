@@ -1,4 +1,5 @@
-const BaseConverter = require('./baseConverter');
+/* eslint-disable arrow-body-style */
+const BaseConverter = require('../shared/baseConverter');
 
 class ToCsv extends BaseConverter {
   constructor({ path, savePath }) {
@@ -6,16 +7,20 @@ class ToCsv extends BaseConverter {
   }
 
   async execute() {
+    return this.setExtension()
+      .validate()
+      .fileToBuffer()
+      .then(() => {
+        return this.bufferToArray()
+          .createHeaders()
+          .convert()
+          .createFile();
+      });
+  }
+
+  setExtension() {
     this.extension = 'csv';
-    this.validate();
-
-    await this.fileToBuffer();
-
-    this.bufferToArray();
-    this.createHeaders();
-    this.convert();
-
-    await this.createFile();
+    return this;
   }
 
   convert() {
@@ -34,6 +39,8 @@ class ToCsv extends BaseConverter {
     });
 
     this.convertedContent = content;
+
+    return this;
   }
 
   createHeaders() {
@@ -46,16 +53,21 @@ class ToCsv extends BaseConverter {
 
     const setHeaders = new Set([...headersArr]);
     this.headers = Array.from(setHeaders);
+
+    return this;
   }
 
   validate() {
     if (!this.path) throw new Error('path is required');
     if (!this.savePath) throw new Error('savePath is required');
     if (!this.path.includes('.json')) throw new Error('invalid file extension');
+
+    return this;
   }
 
   bufferToArray() {
     this.data = JSON.parse(this.file);
+    return this;
   }
 }
 
