@@ -1,4 +1,3 @@
-/* eslint-disable arrow-body-style */
 const BaseConverter = require('../shared/baseConverter');
 
 class ToJson extends BaseConverter {
@@ -10,11 +9,12 @@ class ToJson extends BaseConverter {
     return this.setExtension()
       .validate()
       .fileToBuffer()
-      .then(() => {
+      .then(async () => {
         return this.bufferToData()
           .createHeaders()
           .convert()
-          .createFile();
+          .createFile()
+          .then(() => this.returnSuccessfullyMessage());
       });
   }
 

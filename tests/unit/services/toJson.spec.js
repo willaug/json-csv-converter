@@ -16,7 +16,13 @@ describe('ToJson', () => {
         savePath: '../../mocks/',
       });
 
-      await toJson.execute();
+      const response = await toJson.execute();
+
+      expect(response).toStrictEqual({
+        message: 'success!',
+        filename: toJson.filename,
+        filepath: toJson.filepath,
+      });
 
       expect(writeFileSpy).toBeCalledWith(expect.any(String), toJson.convertedContent);
 

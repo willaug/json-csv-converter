@@ -1,5 +1,6 @@
 module.exports = {
-  verbose: true,
+  verbose: false,
+  clearMocks: true,
   roots: ['<rootDir>/src/', '<rootDir>/tests/'],
   collectCoverage: true,
   collectCoverageFrom: ['<rootDir>/src/**/*.js'],

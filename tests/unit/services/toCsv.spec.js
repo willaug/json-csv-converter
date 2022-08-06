@@ -17,7 +17,13 @@ describe('ToCsv', () => {
         savePath: '../../mocks/',
       });
 
-      await toCsv.execute();
+      const response = await toCsv.execute();
+
+      expect(response).toStrictEqual({
+        message: 'success!',
+        filename: toCsv.filename,
+        filepath: toCsv.filepath,
+      });
 
       expect(writeFileSpy).toBeCalledWith(expect.any(String), toCsv.convertedContent);
 

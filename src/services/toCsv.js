@@ -9,11 +9,12 @@ class ToCsv extends BaseConverter {
     return this.setExtension()
       .validate()
       .fileToBuffer()
-      .then(() => {
+      .then(async () => {
         return this.bufferToData()
           .createHeaders()
           .convert()
-          .createFile();
+          .createFile()
+          .then(() => this.returnSuccessfullyMessage());
       });
   }
 

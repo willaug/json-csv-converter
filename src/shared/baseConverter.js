@@ -12,6 +12,8 @@ class BaseConverter {
     this.headers = [];
 
     this.file = null;
+    this.filename = null;
+    this.filepath = null;
     this.extension = null;
     this.convertedContent = null;
   }
@@ -19,10 +21,19 @@ class BaseConverter {
   async createFile() {
     const mainFilename = dirname(require.main.filename);
     const normalizedPath = resolve(mainFilename, this.savePath);
-    const filename = `${normalizedPath}/${randomBytes(8).toString('hex')}.${this.extension}`;
+    this.filename = `${randomBytes(8).toString('hex')}.${this.extension}`;
+    this.filepath = `${normalizedPath}/${this.filename}`;
 
-    await writeFile(filename, this.convertedContent);
+    await writeFile(this.filepath, this.convertedContent);
     return this;
+  }
+
+  returnSuccessfullyMessage() {
+    return {
+      message: 'success!',
+      filename: this.filename,
+      filepath: this.filepath,
+    };
   }
 
   async fileToBuffer() {
