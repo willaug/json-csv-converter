@@ -1,7 +1,7 @@
 {
   "name": "@willaug/json-csv-converter",
   "version": "1.0.0",
-  "description": "json <=> csv converter",
+  "description": "convert json file to csv file or vice versa",
   "main": "src/index.js",
   "scripts": {
     "test": "npx jest",
