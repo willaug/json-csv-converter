@@ -33,11 +33,13 @@ describe('ToJson', () => {
         '4669f692-18a0-59c0-9daa-8d69ff2808f3,,21',
       ];
 
+      const convertedContentParsed = JSON.parse(toJson.convertedContent);
+
       expect(toJson.extension).toBe('json');
       expect(toJson.data).toContain(csvData.join('\n'));
       expect(toJson.headers).toStrictEqual(['id', 'name', 'age']);
-      expect(toJson.convertedContent).toHaveLength(3);
-      expect(toJson.convertedContent).toStrictEqual([
+      expect(convertedContentParsed).toHaveLength(3);
+      expect(convertedContentParsed).toStrictEqual([
         {
           id: 'c9c9c5c5-fdd1-573a-8aaa-8791795db943',
           name: 'William',

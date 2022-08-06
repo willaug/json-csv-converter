@@ -1,6 +1,7 @@
 const fs = require('node:fs/promises');
 const ToCsv = require('../../../src/services/toCsv');
 const correctJsonData = require('../../mocks/correctJsonData.json');
+const correctJsonDataObject = require('../../mocks/correctJsonDataObject.json');
 
 jest.mock('node:fs/promises', () => ({
   readFile: jest.requireActual('node:fs/promises').readFile,
@@ -34,6 +35,31 @@ describe('ToCsv', () => {
       expect(toCsv.convertedContent).toContain('c9c9c5c5-fdd1-573a-8aaa-8791795db943,William,19');
       expect(toCsv.convertedContent).toContain('a3eac847-5845-5055-9829-db2d68181919,Will,20');
       expect(toCsv.convertedContent).toContain('4669f692-18a0-59c0-9daa-8d69ff2808f3,,21');
+    });
+
+    it('Should be able to execute all suit and create a file with a json object', async () => {
+      const writeFileSpy = jest.spyOn(fs, 'writeFile');
+
+      const toCsv = new ToCsv({
+        path: '../../mocks/correctJsonDataObject.json',
+        savePath: '../../mocks/',
+      });
+
+      const response = await toCsv.execute();
+
+      expect(response).toStrictEqual({
+        message: 'success!',
+        filename: toCsv.filename,
+        filepath: toCsv.filepath,
+      });
+
+      expect(writeFileSpy).toBeCalledWith(expect.any(String), toCsv.convertedContent);
+
+      expect(toCsv.extension).toBe('csv');
+      expect(toCsv.data).toStrictEqual([correctJsonDataObject]);
+      expect(toCsv.headers).toStrictEqual(['id', 'name', 'age']);
+      expect(toCsv.convertedContent).toContain('id,name,age');
+      expect(toCsv.convertedContent).toContain('c9c9c5c5-fdd1-573a-8aaa-8791795db943,William,19');
     });
   });
 

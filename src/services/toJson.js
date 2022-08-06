@@ -45,7 +45,7 @@ class ToJson extends BaseConverter {
       mappedRows.push(object);
     });
 
-    this.convertedContent = mappedRows;
+    this.convertedContent = JSON.stringify(mappedRows, null, 2);
     return this;
   }
 

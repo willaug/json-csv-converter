@@ -66,7 +66,10 @@ class ToCsv extends BaseConverter {
   }
 
   bufferToData() {
-    this.data = JSON.parse(this.file);
+    const rows = JSON.parse(this.file);
+    const rowsIsArray = Array.isArray(rows);
+
+    this.data = rowsIsArray ? rows : [rows];
     return this;
   }
 }
