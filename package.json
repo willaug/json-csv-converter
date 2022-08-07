@@ -8,6 +8,10 @@
     "lint:fix": "npx eslint --fix",
     "lint": "npx eslint"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/willaug/json-csv-converter.git"
+  },
   "keywords": [
     "json",
     "csv",
